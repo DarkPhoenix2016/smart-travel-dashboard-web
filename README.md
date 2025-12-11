@@ -65,21 +65,43 @@ In an era of global mobility, critical travel data is often fragmented across di
 ## 📂 Project Structure
 
 ```text
-/app
-  /api          # Backend API Routes (Next.js App Router)
-    /auth       # NextAuth.js endpoints
-    /travel     # Search aggregator and history endpoints
-    /favorites  # User bookmarks management
-  /login        # Authentication pages
-  /profile      # User profile and history view
-  page.jsx      # Main dashboard view
-/components     # Reusable UI components (WeatherCard, SafetyMap, etc.)
-/lib
-  /services     # Business logic (AdvisoryService, WeatherService)
-  /utils        # Helper functions (Country mapping, API helpers)
-  db.js         # MongoDB connection handler
-/models         # Mongoose database schemas (User, TravelRecord)
-/public         # Static assets (images, icons)
+├── app
+│   ├── api
+│   │   ├── auth            # NextAuth.js authentication endpoints
+│   │   ├── country         # Country metadata API
+│   │   ├── currency        # Currency exchange rate API
+│   │   ├── emergency       # Emergency number API
+│   │   ├── favorites       # User favorites management API
+│   │   ├── geolocation     # IP-based location detection API
+│   │   ├── health          # System health check
+│   │   ├── locations       # Autocomplete search API
+│   │   └── travel          # Main travel data aggregation (search, records)
+│   ├── context             # Global React Context providers (Loader)
+│   ├── favorites           # Favorites page frontend
+│   ├── login               # Login page
+│   ├── profile             # User profile page
+│   ├── globals.css         # Global styles
+│   ├── layout.jsx          # Root layout
+│   └── page.jsx            # Main Dashboard (Home)
+├── components              # Reusable UI Components
+│   ├── ui                  # Shadcn/Radix UI primitives (buttons, cards, inputs)
+│   ├── global-safety-map   # Interactive safety map component
+│   ├── weather-card        # Weather visualization
+│   └── ... (various data cards)
+├── lib                     # Core Logic & Utilities
+│   ├── services            # Backend services (Weather, Advisory, Emergency)
+│   ├── utils               # Helper functions (Country mapping, formatters)
+│   ├── auth.js             # Auth configuration
+│   └── db.js               # MongoDB connection handler
+├── models                  # Mongoose Database Schemas
+│   ├── CountryInfo.js
+│   ├── CurrencyRate.js
+│   ├── EmergencyInfo.js
+│   ├── TravelRecord.js
+│   └── User.js
+└── public                  # Static Assets
+    ├── icons               # Weather and UI icons
+    └── art                 # Illustration assets
 ````
 
 ## 🚀 Installation
