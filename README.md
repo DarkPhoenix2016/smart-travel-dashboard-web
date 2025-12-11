@@ -1,264 +1,191 @@
- # Smart Travel & Safety Dashboard
+# Smart Travel & Safety Dashboard 🌍✈️
 
-[![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+![Project Status](https://img.shields.io/badge/Status-Live-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue) ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 
-A web-based dashboard that provides travelers with real-time, consolidated information for safe and efficient journey planning.
+A comprehensive, real-time travel intelligence platform designed to empower travelers with critical safety, meteorological, and logistical data. By aggregating information from government advisories, weather services, and emergency databases, this dashboard serves as a unified "single source of truth" for international travel planning.
 
-<!-- 
-**Live Demo:** [Link to your live demo here!]
--->
+**🚀 Live Demo:** [https://smart-travel-dashboard-web.vercel.app/](https://smart-travel-dashboard-web.vercel.app/)
 
-## Table of Contents
-1.  [Features](#1-features)
-2.  [Introduction](#2-introduction)
-3.  [Objectives](#3-objectives)
-4.  [System Architecture](#4-system-architecture)
-5.  [Public APIs Used](#5-public-apis-used)
-6.  [Client-Side Implementation](#6-client-side-implementation)
-7.  [Backend (Web Service) Implementation](#7-backend-web-service-implementation)
-8.  [Security Implementation](#8-security-implementation)
-9.  [Testing and Evaluation](#9-testing-and-evaluation)
-10. [Results](#10-results)
-11. [Challenges and Limitations](#11-challenges-and-limitations)
-12. [Conclusion](#12-conclusion)
-13. [Project Setup](#13-project-setup)
+---
 
-## 1. Features
-*   **Real-time Weather Data:** Get current weather conditions for any location.
-*   **Points of Interest:** Discover nearby places like restaurants, tourist spots, and essential services.
-*   **Aggregated Dashboard:** View all critical travel information on a single, user-friendly interface.
-*   **Secure API Handling:** All API keys are securely managed on the backend, never exposed to the client.
+## 📝 Description
 
-## 2. Introduction
+**What the project does:**
+The Smart Travel & Safety Dashboard aggregates essential travel data—including real-time weather, government safety advisories, air quality indices, and local emergency numbers—into a single, user-friendly interface. It allows users to search for any global destination or auto-detect their current location to instantly view a comprehensive safety report.
 
-### 2.1 Background of the Project
-In an increasingly interconnected world, travelers seek comprehensive and up-to-date information to plan their journeys effectively. Accessing scattered data from various sources—such as weather forecasts, local points of interest, and safety advisories—can be time-consuming and inefficient. The Smart Travel & Safety Dashboard project was initiated to address this challenge by creating a unified platform that aggregates critical travel-related data into a single, intuitive interface. This system aims to enhance the travel planning experience by providing relevant, real-time information, thereby empowering travelers to make informed and safer decisions.
+**Who it is for:**
+This tool is designed for international travelers, digital nomads, and travel planners who need reliable, up-to-date safety and logistical information without navigating multiple disconnected websites.
 
-### 2.2 Purpose of the System
-The primary purpose of this system is to develop a client-server application that serves as a "Smart Travel & Safety Dashboard." The system fetches data from multiple public APIs, processes it, and presents it to the user in an aggregated and easily digestible format. By centralizing information on weather, nearby amenities, and safety, the dashboard helps users assess travel conditions and plan their activities more efficiently.
+**Why it exists:**
+In an era of global mobility, critical travel data is often fragmented across disparate sources (e.g., separate sites for weather, visas, and political warnings). This project solves that problem by centralizing this information, reducing cognitive load, and enhancing situational awareness for safer travel.
 
-### 2.3 Overview of the Client–Server Architecture
-The system is built on a standard client-server architecture. The client-side is a web-based interface that allows users to input their travel queries. The server-side, a backend web service, receives these requests, communicates with various external public APIs to gather the necessary data, and may cache or store results in a MongoDB database. The processed information is then sent back to the client for display. This decoupled architecture ensures a clear separation of concerns between the user interface and the core business logic.
+## 📚 Table of Contents
+- [Features](#-features)
+- [Technologies Used](#-technologies-used)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Environment Variables](#-environment-variables)
+- [Usage](#-usage)
+- [API Documentation](#-api-documentation)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Authors](#-authors)
 
-## 3. Objectives
+## ✨ Features
 
-### 3.1 General Objective
-The overarching goal of this project is to design, develop, and implement a functional Smart Travel & Safety Dashboard that provides users with integrated, real-time data from various sources to facilitate safer and more organized travel planning.
+* **Real-time Data Aggregation:** Fetches live data for weather, air quality, currency rates, and safety advisories simultaneously.
+* **Auto-Location Detection:** Automatically detects the user's city and country via IP geolocation or browser GPS.
+* **Global Safety Map:** Interactive map visualization showing safety levels and location context.
+* **Emergency Infrastructure:** Instantly provides local police, ambulance, and fire department contact numbers for the selected destination.
+* **Advisory "Risk Score":** Displays a normalized safety score (0-5) and official government warning text.
+* **User Accounts & Favorites:** Secure Google OAuth login allows users to save favorite destinations and view search history.
+* **Smart Caching:** Implements a "Stale-While-Revalidate" caching strategy using MongoDB to optimize performance and minimize API usage.
 
-### 3.2 Specific Objectives
-*   To integrate at least two public APIs to fetch real-time data related to weather and points of interest.
-*   To develop a responsive and intuitive client-side user interface using HTML, CSS, and JavaScript.
-*   To implement a robust server-side web service using Node.js and Express.js to handle API requests and data aggregation.
-*   To utilize a MongoDB database for storing or caching relevant travel data.
-*   To implement essential security measures, such as API key protection, to ensure secure data handling.
-*   To test the system's functionality, including API endpoints and data flow, using tools like Postman.
+## 💻 Technologies Used
 
-## 4. System Architecture
+**Frontend:**
+* **Framework:** Next.js 14+ (App Router)
+* **UI Library:** React.js
+* **Styling:** Tailwind CSS, Radix UI (via Shadcn/ui)
+* **Icons:** Lucide React
 
-### 4.1 High-Level Architecture Diagram
-```mermaid
-graph TD
-    A[Client Browser] -- HTTP Request --> B(Backend Server);
-    B -- API Request --> C{External APIs};
-    C -- API Response --> B;
-    B -- DB Query --> D[(MongoDB Database)];
-    D -- DB Result --> B;
-    B -- HTTP Response --> A;
+**Backend:**
+* **Runtime:** Node.js (Serverless Functions)
+* **Database:** MongoDB Atlas (Mongoose ODM)
+* **Authentication:** NextAuth.js (Google OAuth 2.0)
+* **HTTP Client:** Axios / Fetch API
 
-    subgraph "Client-Side"
-        A
-    end
+**APIs & Services:**
+* OpenWeatherMap (Weather & AQI)
+* EmergencyNumberAPI (Safety infrastructure)
+* IPGeolocation.io (Location services)
+* Open Exchange Rates (Currency conversion)
+* RestCountries (Metadata)
 
-    subgraph "Server-Side"
-        B
-        D
-    end
+## 📂 Project Structure
 
-    subgraph "Third-Party Services"
-        C
-    end
-```
+```text
+/app
+  /api          # Backend API Routes (Next.js App Router)
+    /auth       # NextAuth.js endpoints
+    /travel     # Search aggregator and history endpoints
+    /favorites  # User bookmarks management
+  /login        # Authentication pages
+  /profile      # User profile and history view
+  page.jsx      # Main dashboard view
+/components     # Reusable UI components (WeatherCard, SafetyMap, etc.)
+/lib
+  /services     # Business logic (AdvisoryService, WeatherService)
+  /utils        # Helper functions (Country mapping, API helpers)
+  db.js         # MongoDB connection handler
+/models         # Mongoose database schemas (User, TravelRecord)
+/public         # Static assets (images, icons)
+````
 
-### 5.2 System Components
-*   **Client (Frontend)**: A web application built with HTML, CSS, and JavaScript. It is responsible for rendering the user interface, capturing user input (e.g., location), and displaying the aggregated data received from the backend.
-*   **Backend (Web Service)**: A Node.js application using the Express.js framework. It exposes API endpoints to the client, handles incoming requests, fetches data from external APIs, performs data processing, and interacts with the MongoDB database.
-*   **Database**: A MongoDB NoSQL database used for storing cached API responses or user-specific data. This helps reduce latency and avoids hitting API rate limits.
-*   **External Public APIs**: Third-party services that provide the core data for the dashboard, such as weather conditions and local points of interest.
+## 🚀 Installation
 
-### 5.3 Data Flow Explanation
-The data flow begins when a user interacts with the client-side interface, for instance, by entering a location. The client sends an HTTP request to a specific endpoint on the backend server. The server receives this request and invokes functions to query the necessary external APIs (e.g., OpenWeatherMap for weather, Geoapify for places). The server may also query its MongoDB database to check for cached data. Once the data is retrieved, the backend aggregates and formats it into a structured JSON object, which is then sent back to the client as the HTTP response. Finally, the client-side JavaScript parses this response and dynamically updates the UI to display the information.
+Follow these steps to set up the project locally:
 
-## 6. Public APIs Used
-
-The dashboard integrates data from several public APIs to provide a comprehensive travel overview. The following sections detail the APIs used in this project.
-
-### 6.1 OpenWeatherMap API
-
-#### 6.1.1 API Description
-The OpenWeatherMap API provides access to current weather data, forecasts, and historical weather information for any geographical location. It is used in this project to fetch real-time weather conditions for the user's specified location.
-
-#### 6.1.2 API Documentation Link
-*   [https://openweathermap.org/api](https://openweathermap.org/api)
-
-#### 6.1.3 Sample API Response
-```json
-{
-  "coord": { "lon": -0.1257, "lat": 51.5085 },
-  "weather": [
-    {
-      "id": 801,
-      "main": "Clouds",
-      "description": "few clouds",
-      "icon": "02d"
-    }
-  ],
-  "main": {
-    "temp": 288.71,
-    "feels_like": 288.21,
-    "temp_min": 287.59,
-    "temp_max": 289.82,
-    "pressure": 1012,
-    "humidity": 76
-  },
-  "wind": { "speed": 4.12, "deg": 240 },
-  "dt": 1661870592,
-  "sys": { "country": "GB", "sunrise": 1661834129, "sunset": 1661882417 },
-  "name": "London"
-}
-```
-
-#### 6.1.4 Extracted Data Fields
-*   `weather[0].description`: The textual description of the weather.
-*   `main.temp`: The current temperature.
-*   `main.humidity`: The current humidity level.
-*   `wind.speed`: The current wind speed.
-*   `name`: The name of the location.
-
-### 6.2 Geoapify Places API
-
-#### 6.2.1 API Description
-The Geoapify Places API allows for querying points of interest (POIs) within a specified area. This is used to find nearby amenities such as restaurants, tourist attractions, and hospitals, providing travelers with valuable local context.
-
-#### 6.2.2 API Documentation Link
-*   https://www.geoapify.com/places-api
-
-#### 6.2.3 Sample API Response
-```json
-{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "British Museum",
-        "country": "United Kingdom",
-        "postcode": "WC1B 3DG",
-        "city": "London",
-        "address_line1": "British Museum",
-        "address_line2": "Great Russell Street, London, WC1B 3DG",
-        "categories": ["entertainment.museum"],
-        "distance": 130
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-0.1269702, 51.5194265]
-      }
-    }
-  ]
-}
-```
-
-#### 6.2.4 Extracted Data Fields
-*   `properties.name`: The name of the place.
-*   `properties.categories`: The categories the place belongs to.
-*   `properties.address_line2`: The full address of the place.
-*   `properties.distance`: The distance from the search center.
-
-## 7. Client-Side Implementation
-*(This section should be filled with details specific to your project's frontend.)*
-
-## 8. Backend (Web Service) Implementation
-*(This section should be filled with details specific to your project's backend.)*
-
-## 9. Security Implementation
-
-Security is a critical aspect of the system, particularly as it handles API keys and transmits data over the network. The following measures were implemented.
-
-### 10.1 API Security Measures
-To prevent exposure of sensitive API keys on the client-side, all external API calls are routed through the backend server. API keys are stored securely on the server as environment variables and are never hardcoded into the source code. This practice follows the principle of keeping secrets out of the version control system and client-side code.
-
-### 10.2 Code Snippets of Security Implementations
-The `dotenv` library is used to manage environment variables in the Node.js backend.
-
-**Loading environment variables:**
-```javascript
-// In the main server file (e.g., index.js)
-require('dotenv').config();
-
-const openWeatherApiKey = process.env.OPENWEATHER_API_KEY;
-```
-
-**`.env` file (This file should be added to `.gitignore`):**
-```
-# .env
-OPENWEATHER_API_KEY="your_actual_api_key_here"
-GEOAPIFY_API_KEY="your_actual_api_key_here"
-```
-
-## 10. Testing and Evaluation
-*(This section should be filled with screenshots and results from your testing.)*
-
-## 11. Results
-*(This section should be filled with final outputs and screenshots.)*
-
-## 12. Challenges and Limitations
-*(This section should be filled with challenges you faced and limitations of the system.)*
-
-## 13. Conclusion
-*(This section should summarize your work and learnings.)*
-
-## 15. Project files and Video Demonstration
-
-### 15.1 Project Setup Instructions
-
-To set up and run this project on a local machine, please follow these instructions.
-
-**Prerequisites:**
-*   Node.js (v16 or later)
-*   MongoDB
-*   A modern web browser (e.g., Chrome, Firefox)
-
-**Setup Steps:**
 1.  **Clone the repository:**
+
     ```bash
-    git clone https://github.com/your-username/smart-travel-dashboard.git
-    cd smart-travel-dashboard
+    git clone [https://github.com/DarkPhoenix2016/smart-travel-dashboard-web.git](https://github.com/DarkPhoenix2016/smart-travel-dashboard-web.git)
+    cd smart-travel-dashboard-web
     ```
 
-2.  **Install backend dependencies:**
+2.  **Install dependencies:**
+
     ```bash
-    cd server # or your backend folder
     npm install
+    # or
+    yarn install
     ```
 
-3.  **Create a `.env` file** in the backend directory and add your API keys:
-    ```
-    MONGO_URI="your_mongodb_connection_string"
-    OPENWEATHER_API_KEY="your_openweathermap_api_key"
-    GEOAPIFY_API_KEY="your_geoapify_api_key"
-    ```
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root directory (see [Environment Variables](https://www.google.com/search?q=%23-environment-variables) below).
 
-4.  **Install client-side dependencies** (if any):
+4.  **Run the development server:**
+
     ```bash
-    cd ../client # or your frontend folder
-    # If you are using a framework, run its install command, e.g., npm install
+    npm run dev
     ```
 
-5.  **Start the backend server:**
-    ```bash
-    cd ../server
-    npm start
-    ```
+5.  **Open the app:**
+    Visit `http://localhost:3000` in your browser.
 
-6.  **Open the client application:**
-    Open the `index.html` file in your browser or start the client development server if you are using a framework.
+## 🔑 Environment Variables
+
+Create a `.env.local` file in the root of your project and add the following keys. You will need API keys from the respective providers.
+
+```env
+# Authentication
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_generated_openssl_secret
+GOOGLE_CLIENT_ID=your_google_cloud_client_id
+GOOGLE_CLIENT_SECRET=your_google_cloud_client_secret
+
+# Database
+MONGODB_URI=your_mongodb_atlas_connection_string
+
+# External APIs
+OPENWEATHERMAP_API_KEY=your_openweather_api_key
+IPGEOLOCATION_API_KEY=your_ipgeolocation_api_key
+```
+
+## 📖 Usage
+
+1.  **Search:** Enter a city name (e.g., "Colombo") in the search bar or click "Auto-Detect Location" to see data for your current area.
+2.  **Login:** Click the "Sign In" button to authenticate via Google.
+3.  **Favorites:** Once logged in, click the "Heart" icon on any city dashboard to save it to your profile for quick access.
+4.  **History:** View your recent searches in the profile section.
+
+## 📡 API Documentation
+
+The backend exposes several RESTful endpoints rooted at `/api`.
+
+**Core Endpoints:**
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/travel/search` | Main aggregator. Accepts `{lat, lon, countryCode}` and returns a full report. |
+| `GET` | `/api/travel/records` | Retrieves the search history for the logged-in user. |
+| `GET` | `/api/favorites` | Fetches the user's saved locations. |
+| `POST` | `/api/favorites` | Adds a new location to the user's bookmarks. |
+
+**Utility Endpoints:**
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/currency` | Returns current exchange rates (Cached). |
+| `GET` | `/api/emergency` | Returns emergency numbers for a specific country code (e.g., `?code=LK`). |
+| `GET` | `/api/geolocation` | Resolves the user's IP address to a physical location. |
+
+## 🤝 Contributing
+
+Contributions are welcome\! Please follow these steps:
+
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
+
+## 🗺️ Roadmap (Optional)
+
+  * [ ] **Personalized Advisories:** Allow users to set a "Home Country" to fetch specific diplomatic travel advice.
+  * [ ] **Proactive Alerts:** Implement email/push notifications when safety levels change for saved locations.
+  * [ ] **Offline Mode:** Convert the application to a PWA for offline access to emergency numbers.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## ✍️ Authors / Maintainers
+
+  * **DarkPhoenix2016** - *Initial Work & Development* - [GitHub Profile](https://www.google.com/search?q=https://github.com/DarkPhoenix2016)
+
+-----
+
+*Built with ❤️ in Sri Lanka*
+
+```
